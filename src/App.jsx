@@ -1,25 +1,21 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './component/Pages/Home';
-import { RecipeProvider } from './component/RecipeContext';
-
-
+// App.js
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./component/Pages/Home";
+import RecipeDetail from "./component/Pages/RecipeDetail";
+import { RecipeProvider } from "./component/RecipeContext";
 
 function App() {
-  
-
-  
-
   return (
-    <>
-      <Router>
-      <RecipeProvider>
+    <RecipeProvider>
+      
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/recipe/:recipeLabel" element={<RecipeDetail />} />
         </Routes>
-      </RecipeProvider>
-    </Router>
-    </>
-  )
+      
+    </RecipeProvider>
+  );
 }
 
-export default App
+export default App;

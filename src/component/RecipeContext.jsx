@@ -22,8 +22,8 @@ export const RecipeProvider = ({children}) => {
               params: {
                 type: 'public',
                 q: query,
-                app_id: '809e5243', // Your APP_ID
-                app_key: '4725c532f0a3982d9d4192a67cbd39ae', // Your API_KEY
+                app_id: 'e063f4ab', // Your APP_ID
+                app_key: 'd756ed9de0bce4acf63116720d269f45', // Your API_KEY
               },
             }
           );

@@ -1,18 +1,20 @@
-// Home.jsx
 import React, { useContext, useState, useEffect } from "react";
 import Header from "../Header";
 import MobileNav from "../MobileNav";
-import RecipeCard from "../RecipeCard";
 import { LuSearch } from "react-icons/lu";
 import { GiKnifeFork } from "react-icons/gi";
 import { RecipeContext } from "../RecipeContext";
+import RecipeCard from "../RecipeCard"
 import Footer from "../Footer";
+import LatestRecipesSection from "../LatestRecipesSection";
 
 function Home() {
   const { fetchRecipes, recipes, loading, error } = useContext(RecipeContext);
   const [query, setQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("breakfast");
   const [visibleRecipes, setVisibleRecipes] = useState(4);
+  const [chineseRecipes, setChineseRecipes] = useState([]);
+  const [frenchRecipes, setFrenchRecipes] = useState([]);
 
   // Fetch default recipes on page load or when the active category changes
   useEffect(() => {
@@ -21,6 +23,35 @@ function Home() {
       setVisibleRecipes(6); // Reset visible recipes on category change
     }
   }, [activeCategory]);
+
+  // useEffect(() => {
+  //   // Fetch Chinese recipes
+  //   fetchRecipes("chinese").then((data) => {
+  //     setChineseRecipes(data.slice(0, 4)); // Only take the first 4 recipes
+  //   });
+
+  //   // Fetch French recipes
+  //   fetchRecipes("french").then((data) => {
+  //     setFrenchRecipes(data.slice(0, 4)); // Only take the first 4 recipes
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    // Fetch Chinese recipes
+    fetchRecipes("chinese")
+      .then((data) => {
+        setChineseRecipes(Array.isArray(data) ? data.slice(0, 4) : []); // Ensure data is an array
+      })
+      .catch((err) => console.error("Error fetching Chinese recipes:", err));
+  
+    // Fetch French recipes
+    fetchRecipes("french")
+      .then((data) => {
+        setFrenchRecipes(Array.isArray(data) ? data.slice(0, 4) : []); // Ensure data is an array
+      })
+      .catch((err) => console.error("Error fetching French recipes:", err));
+  }, []);
+  
 
   const handleSearch = () => {
     if (query.trim()) {
@@ -41,10 +72,10 @@ function Home() {
   };
 
   return (
-    <div className="bg-gray-100 h-[100vh]">
+    <div className="bg-main-200 h-full">
       <Header />
       {/* Hero Section */}
-      <div className="relative flex items-center justify-center gap-4 flex-col h-[350px] bg-hero-bg bg-cover bg-center m-2 rounded-lg overflow-hidden">
+      <div className="relative flex items-center justify-center gap-4 flex-col h-[350px] mt-24 bg-hero-bg bg-cover bg-center m-2 rounded-lg overflow-hidden">
         {/* Overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-40"></div>
 
@@ -101,13 +132,17 @@ function Home() {
       {error && <p className="text-red-500">{error}</p>}
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
-        {recipes.length > 0 ? (
-          recipes.slice(0, visibleRecipes).map((recipeObj, index) => (
-            <RecipeCard key={index} recipe={recipeObj.recipe} />
-          ))
-        ) : (
-          !loading && <p className="text-gray-500 col-span-2 md:col-span-3">Recipe not found.</p>
-        )}
+        {recipes.length > 0
+          ? recipes
+              .slice(0, visibleRecipes)
+              .map((recipeObj, index) => (
+                <RecipeCard key={index} recipe={recipeObj.recipe} />
+              ))
+          : !loading && (
+              <p className="text-gray-500 col-span-2 md:col-span-3">
+                Recipe not found.
+              </p>
+            )}
       </div>
 
       {recipes.length > visibleRecipes && (
@@ -120,6 +155,10 @@ function Home() {
           </button>
         </div>
       )}
+
+      {/* Latest Recipes Sections */}
+      <LatestRecipesSection title="Latest Chinese Recipes" recipes={chineseRecipes} />
+      <LatestRecipesSection title="Latest French Recipes" recipes={frenchRecipes} />
 
       <Footer />
       <MobileNav />
