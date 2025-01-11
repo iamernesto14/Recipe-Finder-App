@@ -11,6 +11,7 @@ export const RecipeProvider = ({children}) => {
     const [loading, setLoading] = useState(false);
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState(null);
+    const [savedRecipes, setSavedRecipes] = useState([]);
 
     const fetchRecipes = async (query) => {
         setLoading(true);
@@ -38,8 +39,21 @@ export const RecipeProvider = ({children}) => {
         }
       };
 
+      const saveRecipe = (recipe) => {
+        setSavedRecipes((prev) => {
+          const alreadySaved = prev.find((r) => r.label === recipe.label);
+          return alreadySaved ? prev : [...prev, recipe];
+        });
+      };
+    
+      const unsaveRecipe = (recipeLabel) => {
+        setSavedRecipes((prev) =>
+          prev.filter((recipe) => recipe.label !== recipeLabel)
+        );
+      };
+
   return (
-    <RecipeContext.Provider value={{error, loading, fetchRecipes, recipes, }}>
+    <RecipeContext.Provider value={{error, loading, fetchRecipes, recipes, saveRecipe, savedRecipes, unsaveRecipe }}>
         {children}
     </RecipeContext.Provider>
   )

@@ -4,7 +4,7 @@ import { GoBookmark } from "react-icons/go";
 
 function Header() {
   return (
-    <div className="flex justify-between items-center fixed top-0 w-full z-40 bg-white px-5 h-20 shadow">
+    <div className="flex justify-between items-center fixed top-0 w-full z-40 bg-white px-5 h-[4.5rem] shadow">
       <div className="font-bold text-xl">LOGO</div>
       <ul className="hidden md:flex uppercase gap-10 items-center justify-center">
         <li>
