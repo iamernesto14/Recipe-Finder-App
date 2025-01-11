@@ -11,8 +11,9 @@ export const RecipeProvider = ({children}) => {
     const [loading, setLoading] = useState(false);
     const [recipes, setRecipes] = useState([]);
     const [error, setError] = useState(null);
-    const [savedRecipes, setSavedRecipes] = useState([]);
-
+    const [savedRecipes, setSavedRecipes] = useState(
+      JSON.parse(localStorage.getItem("savedRecipes")) || []
+    );
     const fetchRecipes = async (query) => {
         setLoading(true);
         setError(null); // Reset the error state
@@ -40,20 +41,27 @@ export const RecipeProvider = ({children}) => {
       };
 
       const saveRecipe = (recipe) => {
-        setSavedRecipes((prev) => {
-          const alreadySaved = prev.find((r) => r.label === recipe.label);
-          return alreadySaved ? prev : [...prev, recipe];
-        });
-      };
-    
-      const unsaveRecipe = (recipeLabel) => {
-        setSavedRecipes((prev) =>
-          prev.filter((recipe) => recipe.label !== recipeLabel)
-        );
+        const updatedSavedRecipes = [...savedRecipes, recipe];
+        setSavedRecipes(updatedSavedRecipes);
+        localStorage.setItem("savedRecipes", JSON.stringify(updatedSavedRecipes));
       };
 
+      const removeRecipe = (recipeLabel) => {
+        const updatedSavedRecipes = savedRecipes.filter(
+          (saved) => saved.label !== recipeLabel
+        );
+        setSavedRecipes(updatedSavedRecipes);
+        localStorage.setItem("savedRecipes", JSON.stringify(updatedSavedRecipes));
+      };
+    
+      // const unsaveRecipe = (recipeLabel) => {
+      //   setSavedRecipes((prev) =>
+      //     prev.filter((recipe) => recipe.label !== recipeLabel)
+      //   );
+      // };
+
   return (
-    <RecipeContext.Provider value={{error, loading, fetchRecipes, recipes, saveRecipe, savedRecipes, unsaveRecipe }}>
+    <RecipeContext.Provider value={{error, loading, fetchRecipes, recipes, saveRecipe, savedRecipes, removeRecipe }}>
         {children}
     </RecipeContext.Provider>
   )
