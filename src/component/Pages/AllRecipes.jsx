@@ -15,7 +15,7 @@ function AllRecipes() {
   }, []);
 
   return (
-    <div className="bg-main-200 dark:bg-main-900 dark:text-main-100 h-screen flex flex-col">
+    <div className="bg-main-200 dark:bg-main-900 dark:text-main-100 h-full flex flex-col">
       <Header />
 
       {/* Main Content */}
@@ -34,7 +34,7 @@ function AllRecipes() {
         {error && <p className="text-red-500">{error}</p>}
 
         {/* Recipe Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
           {recipes.length > 0
             ? recipes.map((recipeObj, index) => (
                 <RecipeCard key={index} recipe={recipeObj.recipe} />

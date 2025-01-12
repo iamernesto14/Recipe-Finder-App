@@ -20,7 +20,7 @@ function Home() {
   useEffect(() => {
     if (activeCategory) {
       fetchRecipes(activeCategory);
-      setVisibleRecipes(6); // Reset visible recipes on category change
+      setVisibleRecipes(12); // Reset visible recipes on category change
     }
   }, [activeCategory]);
 
@@ -74,7 +74,7 @@ function Home() {
             <h1 className="text-4xl md:text-5xl text-white font-bold">Your desire dish?</h1>
             <div className="mt-4">
               <div className="flex justify-between items-center bg-white dark:bg-main-900 w-[320px] md:w-[700px] rounded-md overflow-hidden shadow-md">
-                <div className="flex items-center justify-center bg-main-600 p-3 text-white">
+                <div className="flex items-center justify-center dark:bg-main-600 p-3 text-white">
                 <GiKnifeFork className="text-black text-lg dark:text-main-100" />
                 </div>
                 <input
@@ -99,7 +99,7 @@ function Home() {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex justify-center gap-2 my-4">
+        <div className="flex justify-center gap-2 md:gap-8 my-4">
           {[
             { label: "Breakfast", value: "breakfast" },
             { label: "Lunch", value: "lunch" },
@@ -123,7 +123,7 @@ function Home() {
         {loading && <p>Loading...</p>}
         {error && <p className="text-red-500">{error}</p>}
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 p-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 p-4">
           {recipes.length > 0
             ? recipes
                 .slice(0, visibleRecipes)
