@@ -9,7 +9,7 @@ const SavedRecipe = () => {
   const { savedRecipes } = useContext(RecipeContext);
 
   return (
-    <div className="bg-main-200 min-h-screen flex flex-col">
+    <div className="bg-main-200 dark:bg-main-900 dark:text-main-100 min-h-screen flex flex-col">
       <Header />
       <div className="flex-grow p-4 mt-20">
         <h3 className="text-xl font-semibold mb-4">Saved Recipes</h3>

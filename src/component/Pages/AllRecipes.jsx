@@ -15,7 +15,7 @@ function AllRecipes() {
   }, []);
 
   return (
-    <div className="bg-main-200 h-screen flex flex-col">
+    <div className="bg-main-200 dark:bg-main-900 dark:text-main-100 h-screen flex flex-col">
       <Header />
 
       {/* Main Content */}

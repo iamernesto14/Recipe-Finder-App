@@ -4,10 +4,15 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       backgroundImage: {
         'hero-bg': "url('/src/assets/hero-bg.jpg')",
+        'hero-bg1': "url('/src/assets/darkmode.jpg')",
+        'hero-bg2': "url('/src/assets/darkmode1.jpg')",
+        'hero-bg3': "url('/src/assets/darkmode2.jpg')",
+        'hero-bg4': "url('/src/assets/darkmode3.jpg')",
       },
       colors: {
         main: {

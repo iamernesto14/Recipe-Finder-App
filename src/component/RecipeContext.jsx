@@ -53,6 +53,14 @@ export const RecipeProvider = ({children}) => {
         setSavedRecipes(updatedSavedRecipes);
         localStorage.setItem("savedRecipes", JSON.stringify(updatedSavedRecipes));
       };
+
+      const toggleSaveRecipe = (recipe) => {
+        if (savedRecipes.some((savedRecipe) => savedRecipe.recipe.label === recipe.recipe.label)) {
+          setSavedRecipes(savedRecipes.filter((savedRecipe) => savedRecipe.recipe.label !== recipe.recipe.label));
+        } else {
+          setSavedRecipes([...savedRecipes, recipe]);
+        }
+      };
     
       // const unsaveRecipe = (recipeLabel) => {
       //   setSavedRecipes((prev) =>
@@ -61,7 +69,7 @@ export const RecipeProvider = ({children}) => {
       // };
 
   return (
-    <RecipeContext.Provider value={{error, loading, fetchRecipes, recipes, saveRecipe, savedRecipes, removeRecipe }}>
+    <RecipeContext.Provider value={{error, loading, fetchRecipes, recipes, saveRecipe, savedRecipes, removeRecipe, toggleSaveRecipe }}>
         {children}
     </RecipeContext.Provider>
   )

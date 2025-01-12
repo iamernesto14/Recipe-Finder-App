@@ -9,7 +9,7 @@ function MobileNav() {
   const isActive = (path) => location.pathname === path; // Check if the route matches
 
   return (
-    <div className="bg-white shadow fixed inset-x-0 bottom-0">
+    <div className="bg-white dark:bg-main-600 shadow fixed inset-x-0 bottom-0">
       <div className="flex justify-between items-center md:hidden px-5 py-3">
         {/* All Recipe Button */}
         <Link to="/all-recipes">

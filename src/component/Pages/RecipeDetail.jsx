@@ -18,7 +18,23 @@ function RecipeDetail() {
       (rec) => rec.recipe.label === decodeURIComponent(recipeLabel)
     );
     setRecipe(foundRecipe ? foundRecipe.recipe : null);
-  }, [recipeLabel, recipes]);
+
+    // Check if the recipe is already saved
+    if (foundRecipe) {
+        const isRecipeSaved = savedRecipes.some(
+          (savedRecipe) => savedRecipe.recipe.label === foundRecipe.recipe.label
+        );
+        setIsSaved(isRecipeSaved);
+      }
+  }, [recipeLabel, recipes, savedRecipes]);
+
+  const handleSaveClick = () => {
+    if (recipe) {
+      toggleSaveRecipe(recipe);
+      setIsSaved(!isSaved); // Toggle saved state
+    }
+  };
+
 
   if (!recipe) {
     return <div className="p-4 text-center">Recipe not found!</div>;
@@ -27,7 +43,7 @@ function RecipeDetail() {
   return (
     <div>
       <Header />
-      <div className="p-4 mt-8">
+      <div className="p-4 mt-8 dark:bg-main-900 dark:text-main-100">
         <div>
           {/* Back button */}
           <button
@@ -46,8 +62,11 @@ function RecipeDetail() {
           <h1 className="text-[26px] leading-7 font-bold mb-4">
             {recipe.label}
           </h1>
+
+          {/* save button */}
           <button className="flex gap-1 bg-orange-400 p-3 rounded-md items-center">
-            <GoBookmark /> Save
+          {isSaved ? <GoBookmarkFill /> : <GoBookmark />}
+          {isSaved ? "Saved" : "Save"}
           </button>
         </div>
         <p className="text-[12px] text-main-400">by {recipe.source}</p>

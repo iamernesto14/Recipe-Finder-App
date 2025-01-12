@@ -59,38 +59,40 @@ function Home() {
   };
 
   return (
-    <div className="bg-main-200 min-h-screen flex flex-col">
+    <div className="bg-main-200 dark:bg-main-900 dark:text-main-100 min-h-screen flex flex-col">
       <Header />
 
       {/* Main Content */}
       <div className="flex-grow">
         {/* Hero Section */}
-        <div className="relative flex items-center justify-center gap-4 flex-col h-[350px] mt-20 bg-hero-bg bg-cover bg-center m-2 rounded-lg overflow-hidden">
+        <div className="relative flex items-center justify-center gap-4 flex-col h-[350px] mt-20 bg-hero-bg dark:bg-hero-bg2 bg-cover bg-center m-2 rounded-lg overflow-hidden">
           {/* Overlay */}
           <div className="absolute inset-0 bg-black bg-opacity-40"></div>
 
           {/* Content */}
           <div className="relative z-10 flex flex-col items-center">
-            <h1 className="text-4xl text-white font-bold">Your desire dish?</h1>
+            <h1 className="text-4xl md:text-5xl text-white font-bold">Your desire dish?</h1>
             <div className="mt-4">
-              <div className="flex justify-between items-center bg-white w-[320px] rounded-md overflow-hidden shadow-md">
-                <GiKnifeFork className="m-3 text-black text-lg" />
+              <div className="flex justify-between items-center bg-white dark:bg-main-900 w-[320px] md:w-[700px] rounded-md overflow-hidden shadow-md">
+                <div className="flex items-center justify-center bg-main-600 p-3 text-white">
+                <GiKnifeFork className="text-black text-lg dark:text-main-100" />
+                </div>
                 <input
                   type="text"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search recipe..."
-                  className="w-full outline-none px-2 py-2 text-gray-600"
+                  className="w-full outline-none px-2 py-2 text-gray-600 dark:text-main-100 dark:bg-main-900"
                 />
                 <div
                   className="flex items-center justify-center bg-yellow-600 p-3 text-white"
                   onClick={handleSearch}
                 >
-                  <LuSearch className="text-black text-lg cursor-pointer" />
+                  <LuSearch className="text-black text-lg cursor-pointer dark:text-main-100" />
                 </div>
               </div>
             </div>
-            <p className="text-white text-sm mt-2">
+            <p className="text-white text-sm md:text-lg mt-2">
               Search any recipe. e.g burger, pizza, sandwich
             </p>
           </div>
