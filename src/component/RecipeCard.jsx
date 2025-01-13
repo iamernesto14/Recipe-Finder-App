@@ -7,7 +7,6 @@ import { RecipeContext } from "./RecipeContext";
 
 function RecipeCard({ recipe }) {
   const { saveRecipe, removeRecipe, savedRecipes } = useContext(RecipeContext);
-  // const isSaved = savedRecipes.some((r) => r.label === recipe.label);
   const isSaved = savedRecipes.some((saved) => saved.label === recipe.label);
 
   const toggleSave = () => {

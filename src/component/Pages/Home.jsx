@@ -7,6 +7,7 @@ import { RecipeContext } from "../RecipeContext";
 import RecipeCard from "../RecipeCard";
 import Footer from "../Footer";
 import LatestRecipesSection from "../LatestRecipesSection";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { fetchRecipes, recipes, loading, error } = useContext(RecipeContext);
@@ -15,12 +16,20 @@ function Home() {
   const [visibleRecipes, setVisibleRecipes] = useState(4);
   const [chineseRecipes, setChineseRecipes] = useState([]);
   const [frenchRecipes, setFrenchRecipes] = useState([]);
+  const [healthLabels, setHealthLabels] = useState([]);
+  const navigate = useNavigate();
 
   // Fetch default recipes on page load or when the active category changes
   useEffect(() => {
+    // Fetch recipes and extract health labels
     if (activeCategory) {
-      fetchRecipes(activeCategory);
-      setVisibleRecipes(12); // Reset visible recipes on category change
+      fetchRecipes(activeCategory).then(() => {
+        const labels = recipes.flatMap((recipeObj) =>
+          recipeObj.recipe.healthLabels
+        );
+        setHealthLabels([...new Set(labels)]);
+        setVisibleRecipes(12); // Reset visible recipes on category change
+      });
     }
   }, [activeCategory]);
 
@@ -52,6 +61,10 @@ function Home() {
     if (activeCategory !== category) {
       setActiveCategory(category); // Only set the active category if it changes
     }
+  };
+
+  const handleHealthLabelClick = (label) => {
+    navigate("/all-recipes", { state: { filter: label } });
   };
 
   const handleSeeMore = () => {
@@ -151,6 +164,23 @@ function Home() {
         {/* Latest Recipes Sections */}
         <LatestRecipesSection title="Latest Chinese Recipes" recipes={chineseRecipes} />
         <LatestRecipesSection title="Latest French Recipes" recipes={frenchRecipes} />
+
+        <div className="mt-8 px-4">
+          <h2 className="text-2xl font-semibold text-gray-700 dark:text-white mb-4">
+            Explore by Health Labels
+          </h2>
+          <div className="flex flex-wrap justify-center gap-2">
+            {healthLabels.map((label, index) => (
+              <button
+                key={index}
+                onClick={() => handleHealthLabelClick(label)}
+                className="px-3 py-2 bg-yellow-600 text-white rounded-md font-medium hover:bg-yellow-700 transition-all"
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Footer */}

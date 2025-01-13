@@ -1,20 +1,15 @@
-import React from 'react';
+import React from "react";
 
 function Footer() {
   return (
-    <div className='text-sm mx-5 pb-[104px] md:pb-5 pt-10 dark:bg-main-900 dark:text-main-100'>
-      <hr className='bg-black mb-3 h-[2px]' />
-      <div className='flex items-center justify-between'>
-        <div className='flex flex-col items-start gap'>
-          <p>Design & Development</p>
-          <p>Ernest Anokye</p>
-        </div>
-        <div className='flex flex-col items-start gap'>
-          <p>Based in</p>
-          <p>Ghana</p>
-        </div>
+    <div className="text-sm pb-[104px] md:pb-5 pt-10 dark:bg-main-900 text-center dark:text-main-100">
+      <hr className="bg-black mb-3 h-[2px]" />
+
+      <div className="mx-5 md:flex justify-between items-center">
+        <p>All Right Reserved &copy; 2025</p>
+
+        <p className="text-center mt-2">Powered by <img src="" alt="" /> </p>
       </div>
-      <p className='text-center mt-4'>All Right Reserved &copy; 2025</p>
     </div>
   );
 }
