@@ -166,12 +166,10 @@ function Home() {
         <LatestRecipesSection title="Latest French Recipes" recipes={frenchRecipes} />
 
         <div className="mt-8 px-4">
-          <div className="text-center">
-          <h2 className="text-2xl font-semibold text-gray-700 dark:text-white mb-4">
+          <h2 className="text-4xl text-center font-semibold text-gray-700 dark:text-white mb-3">
           Choose your health preference.
           </h2>
-          <p>Choosing your health preference is an important step towards achieving a healthier lifestyle.</p>
-          </div>
+          <p className="text-center mb-4">Choosing your health preference is an important step towards achieving a healthier lifestyle.</p>
           <div className="flex flex-wrap justify-center gap-2">
             {healthLabels.map((label, index) => (
               <button
