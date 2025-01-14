@@ -1,9 +1,60 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import { LuSearch } from "react-icons/lu";
 import Button from "./Button";
+import { RecipeContext } from "./RecipeContext";
+import FilterAccordion from "./FilterAccordion";
 
 const FilterMenu = ({ isOpen, onClose }) => {
+  const { recipes } = useContext(RecipeContext);
+  const [activeAccordion, setActiveAccordion] = useState(null); // Track the active accordion
+
+  // Extract unique dietLabels and healthLabels from the recipes
+  const dietLabels = Array.from(
+    new Set(
+      recipes.flatMap((recipe) =>
+        recipe.recipe.dietLabels ? recipe.recipe.dietLabels : []
+      )
+    )
+  );
+
+  const healthLabels = Array.from(
+    new Set(
+      recipes.flatMap((recipe) =>
+        recipe.recipe.healthLabels ? recipe.recipe.healthLabels : []
+      )
+    )
+  );
+
+  const dishType = Array.from(
+    new Set(
+      recipes.flatMap((recipe) =>
+        recipe.recipe.dishType ? recipe.recipe.dishType : []
+      )
+    )
+  );
+  const cuisineType = Array.from(
+    new Set(
+      recipes.flatMap((recipe) =>
+        recipe.recipe.cuisineType ? recipe.recipe.cuisineType : []
+      )
+    )
+  );
+  const mealType = Array.from(
+    new Set(
+      recipes.flatMap((recipe) =>
+        recipe.recipe.mealType ? recipe.recipe.mealType : []
+      )
+    )
+  );
+
+  // Toggle accordion state
+  const toggleAccordion = (accordionName) => {
+    setActiveAccordion((prev) =>
+      prev === accordionName ? null : accordionName
+    );
+  };
+
   return (
     <div
       className={`fixed top-0 right-0 w-[350px] h-screen bg-main-700 text-main-100 dark:bg-main-300 shadow-lg transform ${
@@ -32,41 +83,17 @@ const FilterMenu = ({ isOpen, onClose }) => {
       </div>
 
       {/* Accordion Menu */}
-      <div className="p-4 pb-[80px]"> {/* Add padding to avoid overlap */}
-        <div className="space-y-4">
-          {/* <details>
-            <summary className="cursor-pointer font-semibold">Cuisine</summary>
-            <div className="mt-2 space-y-2">
-              <label className="block">
-                <input type="checkbox" className="mr-2" /> Italian
-              </label>
-              <label className="block">
-                <input type="checkbox" className="mr-2" /> Indian
-              </label>
-              <label className="block">
-                <input type="checkbox" className="mr-2" /> Chinese
-              </label>
-            </div>
-          </details> */}
-          <details>
-            <summary className="cursor-pointer font-semibold">Diet</summary>
-            <div className="mt-2 space-y-2">
-              <label className="block">
-                <input type="checkbox" className="mr-2" /> Vegetarian
-              </label>
-              <label className="block">
-                <input type="checkbox" className="mr-2" /> Vegan
-              </label>
-              <label className="block">
-                <input type="checkbox" className="mr-2" /> Gluten-Free
-              </label>
-            </div>
-          </details>
-        </div>
-      </div>
+      <FilterAccordion
+                  activeAccordion={activeAccordion}
+                  toggleAccordion={toggleAccordion}
+                  dietLabels={dietLabels}
+                  healthLabels={healthLabels}
+                  dishType={dishType}
+                  cuisineType={cuisineType}
+                  mealType={mealType} />
 
       {/* Apply and Clear Buttons */}
-      <div className="absolute bottom-0 left-0 w-full flex justify-between items-center gap-4 p-4 dark:bg-main-800 border-t border-gray-200">
+      <div className="absolute bottom-0 left-0 w-full flex justify-between items-center gap-4 p-4 pb-10 dark:bg-main-800 border-t border-gray-200">
         <Button className="bg-main-400" name="Clear" />
         <Button className="bg-orange-500" name="Apply" />
       </div>

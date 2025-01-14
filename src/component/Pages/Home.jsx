@@ -53,7 +53,7 @@ function Home() {
     if (query.trim()) {
       fetchRecipes(query);
       setActiveCategory(""); // Clear the active category when performing a search
-      setVisibleRecipes(6); // Reset visible recipes on search
+      setVisibleRecipes(); // Reset visible recipes on search
     }
   };
 

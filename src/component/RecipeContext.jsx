@@ -8,9 +8,7 @@ export const RecipeProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [recipes, setRecipes] = useState([]);
   const [error, setError] = useState(null);
-  const [savedRecipes, setSavedRecipes] = useState(
-    JSON.parse(localStorage.getItem("savedRecipes")) || []
-  );
+  const [savedRecipes, setSavedRecipes] = useState([]); // Saved recipes are managed in state only
 
   // Cache object to store fetched recipes by query
   const recipeCache = new Map();
@@ -32,13 +30,13 @@ export const RecipeProvider = ({ children }) => {
         params: {
           type: "public",
           q: query,
-          app_id: "85d36345", // Your APP_ID
-          app_key: "b87065da3b95b9f6399d2d6863812d1d", // Your API_KEY
+          app_id: "3ce0814f", // Your APP_ID
+          app_key: "7a8218c110b5e100bad0ef8f56f2279a", // Your API_KEY
         },
       });
 
-      console.log("Fetched Data:", response.data); // Log the entire response
-      console.log("Recipe Hits:", response.data.hits); // Log the hits array
+      console.log("Fetched Data:", response.data); 
+      console.log("Recipe Hits:", response.data.hits); 
 
       const fetchedRecipes = response.data.hits;
 
@@ -57,7 +55,6 @@ export const RecipeProvider = ({ children }) => {
   const saveRecipe = (recipe) => {
     const updatedSavedRecipes = [...savedRecipes, recipe];
     setSavedRecipes(updatedSavedRecipes);
-    localStorage.setItem("savedRecipes", JSON.stringify(updatedSavedRecipes));
   };
 
   const removeRecipe = (recipeLabel) => {
@@ -65,7 +62,6 @@ export const RecipeProvider = ({ children }) => {
       (saved) => saved.label !== recipeLabel
     );
     setSavedRecipes(updatedSavedRecipes);
-    localStorage.setItem("savedRecipes", JSON.stringify(updatedSavedRecipes));
   };
 
   const toggleSaveRecipe = (recipe) => {
